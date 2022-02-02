@@ -8,6 +8,12 @@ field.src = "source/field.png";
 const foodImg = new Image();
 foodImg.src = "source/grape.png"
 
+let imgSrcs = ["source/grape.png", "source/watermelon.png", "source/lemon.png",
+ "source/banana.png", "source/cherry.png", "source/apple.png", 
+ "source/mango.png", "source/kiwi.png", "source/strawberry.png", "source/orange.png", "source/pear.png"]
+let imageCounter = 0;
+
+
 let box = 32;
 
 let score = 0;
@@ -52,6 +58,14 @@ function eatTail(head, arr){
     }
 }
 
+///////////////////////////to remove
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+/////////////////////////////////////
+
 function drawGame() {
     ctx.drawImage(field, 0, 0);
 
@@ -72,9 +86,11 @@ function drawGame() {
     if(snakeX == food.x && snakeY == food.y){
         score += 5;
         food = {
-                x: Math.floor((Math.random() * 17 + 1)) * box,
-                y: Math.floor((Math.random() * 15 + 3)) * box,
+                x: Math.floor(Math.random() * 17 + 1) * box,
+                y: Math.floor(Math.random() * 15 + 3) * box,
             };
+        
+        foodImg.src = imgSrcs[getRandomInt(0,11)];
     }
     else{
         snake.pop();
@@ -84,12 +100,6 @@ function drawGame() {
         || snakeY < 3 * box || snakeY > box * 17){
             clearInterval(game);
     }
-
-
-    if(snakeX < box) snakeX = box * 17;
-    if(snakeX > box * 17) snakeX = box;
-
-    
 
     if(dir == "left") snakeX -= box;
     if(dir == "right") snakeX += box;
@@ -107,3 +117,4 @@ function drawGame() {
 }
 
 let game = setInterval(drawGame, 100);
+
